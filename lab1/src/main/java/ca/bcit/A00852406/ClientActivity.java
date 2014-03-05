@@ -19,6 +19,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.nio.ByteBuffer;
+import java.util.Scanner;
 
 /**
  * Encapsulates the client side of the application.
@@ -45,7 +47,7 @@ public class ClientActivity extends Activity
     private class SendLocationUpdate extends AsyncTask<String, String, Void> {
         private static final int SERVER_ADDR_IDX    = 0; /** The index of the server's IP address string in the params array. */
         private static final int SERVER_PORT_IDX    = 1; /** The index of the string representing the port to send on. */
-        private static final int DATA_IDX           = 2; /** The index into the params array of the data to be sent. */
+        private static final int DATA_IDX           = 2; /** The index into the params array of the data to send. */
 
         private InetAddress     serverAddress;           /** A byte representation of the server's internet address. */
         private DatagramSocket  udpSock;                 /** A UDP socket on which to send data. */
@@ -65,10 +67,11 @@ public class ClientActivity extends Activity
         protected Void doInBackground(String... params) {
             try
             {
-                serverAddress = InetAddress.getByName(params[SERVER_ADDR_IDX]);
-                port = Integer.parseInt(params[SERVER_PORT_IDX]);
-                udpSock = new DatagramSocket();
-                dgramPacket = new DatagramPacket(params[DATA_IDX].getBytes(), params[DATA_IDX].length(), serverAddress, port);
+                Scanner scan;
+                serverAddress   = InetAddress.getByName(params[SERVER_ADDR_IDX]);
+                port            = Integer.parseInt(params[SERVER_PORT_IDX]);
+                udpSock         = new DatagramSocket();
+                dgramPacket     = new DatagramPacket(params[DATA_IDX].getBytes(), params[DATA_IDX].length(), serverAddress, port);
                 udpSock.send(dgramPacket);
 
             } catch (Exception e) {
@@ -157,17 +160,17 @@ public class ClientActivity extends Activity
         {
             final DateFormat df     = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
             final String nowAsISO   = df.format(loc.getTime());
-            final double latVal     = loc.getLatitude();
-            final double longVal    = loc.getLongitude();
+            final Double latVal     = loc.getLatitude();
+            final Double longVal    = loc.getLongitude();
             final String latStr     = (latVal < 0 ? latVal * -1 + "\u00B0 S" : latVal + "\u00B0 N");
             final String longStr    = (longVal < 0 ? longVal * -1 + "\u00B0 W" : longVal + "\u00B0 E");
             final TextView log      = (TextView)findViewById(R.id.programLog);
 
-            String data = "Time: " + nowAsISO + "\nLatitude: " + latStr + "\nLongitude: " + longStr + "\n";
+            String formattedData = "Time: " + nowAsISO + "\nLatitude: " + latStr + "\nLongitude: " + longStr + "\n";
 
             log.setTextColor(Color.BLACK);
-            log.append(data);
-            new SendLocationUpdate().execute(IP, port, data);
+            log.append(formattedData + "\n");
+            new SendLocationUpdate().execute(IP, port, latVal.toString() + " " + longVal.toString() + " " + nowAsISO);
         }
 
         /**

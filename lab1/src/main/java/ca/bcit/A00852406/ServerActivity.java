@@ -11,10 +11,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.nio.ByteBuffer;
+import java.util.Scanner;
 
 /**
  * Encapsulates the server's functionality.
@@ -34,6 +38,7 @@ public class ServerActivity extends Activity
 
     /**
      * This class creates a socket, listens for client data on it, and displays any data received.
+     * @author <u>Aman Abdulla</u>
      * @author Shane Spoor
      */
     private class RecvLocationUpdate extends AsyncTask<String, String, Void> {
@@ -70,16 +75,18 @@ public class ServerActivity extends Activity
         protected Void doInBackground(String... params) {
             try
             {
-                port            = Integer.parseInt(params[0]);
-                udpSock         = new DatagramSocket(port);
+                port               = Integer.parseInt(params[0]);
+                udpSock            = new DatagramSocket(port);
+                boolean cancelled  = isCancelled();
                 String data;
-                while(!isCancelled())
+                while(!cancelled)
                 {
                     udpSock.receive(dgramPacket);
 
                     clientAddr      = dgramPacket.getAddress();
                     data = new String(dgramPacket.getData(), 0, dgramPacket.getLength());
                     publishProgress(data + "\nClient address: " + clientAddr.getHostAddress() + "\n");
+                    cancelled = isCancelled();
                 }
             } catch (Exception e) {
                 publishProgress("Receive failure: " + e.getMessage());
@@ -108,8 +115,17 @@ public class ServerActivity extends Activity
             }
             else
             {
+                LatLng loc;
+                Scanner scan = new Scanner(update[0]);
+                double lat = scan.nextDouble(), lon = scan.nextDouble();
+                String latStr, longStr;
+                loc                         = new LatLng(lat, lon);
+
+                mapHandle.addMarker(new MarkerOptions().position(loc));
+                latStr  = "Latitude: " + (lat < 0 ? lat * -1 + "\u00B0 S" : lat + "\u00B0 N") + "\n";
+                longStr = "Longitude: " + (lon < 0 ? lon * -1 + "\u00B0 W" : lon + "\u00B0 E") + "\n";
                 log.setTextColor(Color.BLACK);
-                log.append(update[0]);
+                log.append(scan.next() + "\n" + latStr + longStr);
             }
 
         }
@@ -130,6 +146,23 @@ public class ServerActivity extends Activity
         log = (TextView)findViewById(R.id.server_log);
         mapHandle = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
     }
+
+    /**
+     * Kills the server thread if it's active.
+     *
+     * If the server thread isn't released, it may cause issues when trying to run the server twice.
+     * It must therefore be cancelled when the activity is destroyed.
+     *
+     * @author Shane Spoor
+     */
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        if(recvTask != null)
+            recvTask.cancel(true);
+    }
+
 
     /**
      * Starts an asynchronous task to listen for incoming data.
