@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="server_port_placeholder">Enter port number</string>
+    <string name="server_output_label">Received Data:\n</string>
+    <string name="server_start_btn">Start Receiving Data</string>
+    <string name="server_stop_btn">Stop Receiving Data</string>
+</resources>

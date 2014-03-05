@@ -1,0 +1,27 @@
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:weightSum="1"
+    android:background="#4adeff"
+    android:id="@+id/activity_fullscreen">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_client_msg"
+            android:id="@+id/btn_client"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.20"
+            android:onClick="startClient"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_server_msg"
+            android:id="@+id/btn_server"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.19"
+            android:onClick="startServer"/>
+
+</LinearLayout>

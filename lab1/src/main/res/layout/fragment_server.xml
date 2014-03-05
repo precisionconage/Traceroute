@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="ca.bcit.A00852406.util.Server$PlaceholderFragment"
+    android:background="#4adeff"
+    android:orientation="vertical">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/edit_port"
+        android:hint="@string/server_port_placeholder"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/server_stop_btn"
+            android:onClick="stopListening"
+            android:id="@+id/server_stop"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/server_start_btn"
+            android:onClick="startListening"
+            android:layout_weight="0.5"
+            android:id="@+id/server_start"/>
+    </LinearLayout>
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.9"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:weightSum="1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/server_output_label"
+            android:id="@+id/log_label"
+            android:textSize="20dp" />
+        <ScrollView android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/server_log"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1" />
+        </ScrollView>
+        </LinearLayout>
+
+</LinearLayout>

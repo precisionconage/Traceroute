@@ -1,0 +1,93 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ca.bcit.A00852406.activity_client">
+
+        <LinearLayout style="@style/LoginFormContainer"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:weightSum="1"
+            android:background="#4adeff">
+
+            <EditText
+                android:id="@+id/IP"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:hint="@string/prompt_IP"
+                android:textColor="#0001ff"
+                android:textColorHint="#545fff" />
+
+            <EditText
+                android:id="@+id/port"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_port"
+                android:imeActionId="@+id/login"
+                android:imeOptions="actionUnspecified"
+                android:textColorHint="#545fff"
+                android:inputType="number"
+                android:textColor="#0001ff" />
+
+            <LinearLayout style="@style/LoginFormContainer"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:weightSum="1"
+                android:background="#4adeff">
+
+                <Button android:id="@+id/begin_plotting_button"
+                    android:layout_weight="0.5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/action_stop_plotting"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:layout_gravity="left"
+                    android:onClick="stopPlotting"/>
+
+                <Button android:id="@+id/begin_plotting_button"
+                    android:layout_weight="0.5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/action_begin_plotting"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:layout_gravity="right"
+                    android:onClick="startPlotting"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:weightSum="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:text="@string/plotting_label"
+                android:textSize="20dp" />
+            <ScrollView android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/programLog"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1" />
+            </ScrollView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+</merge>

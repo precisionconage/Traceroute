@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Traceroute</string>
+    <string name="main_msg">Select Operation Mode</string>
+    <string name="btn_client_msg">Client</string>
+    <string name="btn_server_msg">Server</string>
+    <string name="title_activity_server">Server</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+</resources>

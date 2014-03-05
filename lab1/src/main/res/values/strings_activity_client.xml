@@ -1,0 +1,11 @@
+<resources>
+    <string name="title_activity_client">Send Location</string>
+
+    <string name="prompt_IP">IP Address, e.g. 192.168.0.1</string>
+    <string name="prompt_port">Port Number</string>
+    <string name="action_begin_plotting"><b>Begin Plotting</b></string>
+    <string name="action_stop_plotting"><b>Stop Plotting</b></string>
+    <string name="error_invalid_IP">Invalid IP address! Must be in the form xxx.xxx.xxx.xxx (x &lt;= 255)</string>
+    <string name="location_data"><b>Location Data</b></string>
+    <string name="plotting_label">Location Data:</string>
+</resources>
